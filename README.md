@@ -40,4 +40,4 @@ Follow the on-screen prompts to inspect the sizes of various directories and opt
 
 ## Credits
 
-System Data Inspector by Alex Arroyo, &copy; 2023
+System Data Inspector &copy; Alex Arroyo, 2023
