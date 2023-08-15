@@ -9,7 +9,7 @@ def get_size(path):
         size_num, size_unit = float(size_str[:-1]), size_str[-1]
         
         if size_unit == 'B':
-            size_in_bytes = size_num
+            size_in_bytes = size_num * 1
         elif size_unit == 'K':
             size_in_bytes = size_num * 1024
         elif size_unit == 'M':
@@ -21,10 +21,13 @@ def get_size(path):
         
         return size_in_bytes
     except subprocess.CalledProcessError as e:
-        return f"Error processing {path}: {e}"
+        return -1  # Devuelve un valor negativo en caso de error
 
 def format_size(size_bytes):
     try:
+        if size_bytes < 0:  # Comprueba si el tamaño es negativo
+            return "Unknown size, insufficient permissions)"  # Devuelve un mensaje apropiado
+        
         size_kb = size_bytes / 1024
         size_mb = size_bytes / (1024 ** 2)
         size_gb = size_bytes / (1024 ** 3)
@@ -107,14 +110,13 @@ if user_response == "y" or user_response == "yes":
                     item_path = os.path.join(os.path.expanduser(directory), item)
                     item_size = get_size(item_path)
                     formatted_item_size = format_size(item_size)
-                    if os.path.isdir(item_path):
-                        print(f"Subdirectory: {item_path} - Size: {formatted_item_size}")
-                    else:       
-                        print(f"\033[1;37;44mFile: {item_path} - Size: {formatted_item_size}\033[0m")  # White text on blue background
-                print(f"\033[1;33m{'-' * 40}\033[0m")  # Yellow separator
-        print()
+                    print(f"{item} ({formatted_item_size})")
+            else:
+                print(f"No subdirectories or files found in {directory}")
+        else:
+            print(f"Skipping {directory}")
 
-else:  # If user response is "n" or "no"
-    print("\nThank you for using MacOs System Data Inspector, by Ale Arroyo\n")
-
-
+    print("\n\033[1;37;104mEnd of the inspection\033[0m\n")
+else:
+    print("\n\033[1;37;104mInspection canceled\033[0m\n")
+    print("Thank you for using MacOs System Data Inspector, by Alex Arroyo\n")
