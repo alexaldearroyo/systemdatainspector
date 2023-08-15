@@ -90,33 +90,43 @@ print("\033[1;33m" + separator + "\033[0m")  # Yellow separator
 
 print()  # Another newline
 
-# ASK THE USER IF THEY WANT TO INSPECT THE PARENT DIRECTORIES
+# ASK THE USER IF THEY WANT TO INSPECT ANY DIRECTORY
 
-user_response = get_valid_user_response()
+user_response = input("Do you want to inspect any directory? (y/n): ").lower()
 
-if user_response == "y" or user_response == "yes":
-    print("\033[1;37;104mLet's proceed with the inspection of the directories\033[0m\n")
+while user_response not in ["y", "yes", "n", "no"]:
+    print("Invalid input. Please enter 'y' or 'n'.")
+    user_response = input("Do you want to inspect any directory? (y/n): ").lower()
 
-    for directory in directories:
-        dir_size = get_size(directory)
-        formatted_dir_size = format_size(dir_size)
-        response = ask_yes_no_question(f"Do you want to see subdirectories and files of {directory} ({formatted_dir_size})?")
+if user_response in ["y", "yes"]:
+    directory_to_inspect = input("\033[1;32mPlease specify the directory you want to inspect:\033[0m ")
+    print("\033[1;37;104mLet's proceed with the inspection of the directory\033[0m\n")
 
-        if response in ["y", "yes"]:
-            subdirs_and_files = list_subdirectories_and_files(os.path.expanduser(directory))
-            if subdirs_and_files:
-                print("\033[1;33m" + separator + "\033[0m")  # Yellow separator
-                for item in subdirs_and_files:
-                    item_path = os.path.join(os.path.expanduser(directory), item)
-                    item_size = get_size(item_path)
-                    formatted_item_size = format_size(item_size)
-                    print(f"{item} ({formatted_item_size})")
-            else:
-                print(f"No subdirectories or files found in {directory}")
+    dir_size = get_size(directory_to_inspect)
+    formatted_dir_size = format_size(dir_size)
+    response = ask_yes_no_question(f"Do you want to see subdirectories and files of {directory_to_inspect} ({formatted_dir_size})?")
+
+    if response in ["y", "yes"]:
+        subdirs_and_files = list_subdirectories_and_files(os.path.expanduser(directory_to_inspect))
+        if subdirs_and_files:
+            print("\033[1;33m" + separator + "\033[0m")  # Yellow separator
+            for item in subdirs_and_files:
+                item_path = os.path.join(os.path.expanduser(directory_to_inspect), item)
+                item_size = get_size(item_path)
+                formatted_item_size = format_size(item_size)
+                print(f"{item} ({formatted_item_size})")
         else:
-            print(f"Skipping {directory}")
+            print(f"No subdirectories or files found in {directory_to_inspect}")
+
+        # Provide a link to open the directory in Finder
+        open_in_finder = ask_yes_no_question(f"Do you want to open {directory_to_inspect} in Finder?")
+        if open_in_finder in ["y", "yes"]:
+            subprocess.run(["open", os.path.expanduser(directory_to_inspect)])
+
+    else:
+        print(f"Skipping {directory_to_inspect}")
 
     print("\n\033[1;37;104mEnd of the inspection\033[0m\n")
 else:
     print("\n\033[1;37;104mInspection canceled\033[0m\n")
-    print("Thank you for using MacOs System Data Inspector, by Alex Arroyo\n")
+    print("Thank you for using MacOS System Data Inspector, by Alex Arroyo\n")
