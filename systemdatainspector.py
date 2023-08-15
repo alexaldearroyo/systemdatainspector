@@ -103,7 +103,7 @@ def display_directories_with_sizes(first_display=True):
         formatted_size = format_size(size)
         print(f"The size of Directory {idx}: {directory} is: {formatted_size}")
 
-print("\n\033[1;33mMACOS SYSTEM DATA INSPECTOR\033[0m\n")  # Yellow text
+print("\n\033[1;33mSYSTEM DATA INSPECTOR\033[0m\n")  # Yellow text
 print("\033[1;37;104mApproximate calculation of the potentially modifiable space occupied by System Data on your Mac\033[0m\n")
 
 display_directories_with_sizes()
