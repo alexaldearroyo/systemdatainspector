@@ -74,31 +74,29 @@ directories = [
     "~/Library/Preferences/"
 ]
 
-print("\n\033[1;33mMACOS SYSTEM DATA INSPECTOR\033[0m\n")  # Yellow text
+def display_directories_with_sizes(first_display=True):
+    if not first_display:
+        print("\n\033[1;37;104mSystem Data Directories\033[0m\n")  # Blue background text only for subsequent displays
+    for directory in directories:
+        size = get_size(directory)
+        formatted_size = format_size(size)
+        print(f"The size of {directory} is: {formatted_size}")
 
+print("\n\033[1;33mMACOS SYSTEM DATA INSPECTOR\033[0m\n")  # Yellow text
 print("\033[1;37;104mApproximate calculation of the potentially modifiable space occupied by System Data on your Mac\033[0m\n")
 
-for directory in directories:
-    size = get_size(directory)
-    formatted_size = format_size(size)
-    print(f"The size of {directory} is: {formatted_size}")
+display_directories_with_sizes()
 
 print()  # Create a newline
-
 separator = '=' * 60  # Yellow graphical separator
 print("\033[1;33m" + separator + "\033[0m")  # Yellow separator
 
-print()  # Another newline
+while True:
+    user_response = ask_yes_no_question("Do you want to inspect any directory?")
 
-# ASK THE USER IF THEY WANT TO INSPECT ANY DIRECTORY
+    if user_response in ["n", "no"]:
+        break
 
-user_response = input("Do you want to inspect any directory? (y/n): ").lower()
-
-while user_response not in ["y", "yes", "n", "no"]:
-    print("Invalid input. Please enter 'y' or 'n'.")
-    user_response = input("Do you want to inspect any directory? (y/n): ").lower()
-
-if user_response in ["y", "yes"]:
     directory_to_inspect = input("\033[1;32mPlease specify the directory you want to inspect:\033[0m ")
     print("\033[1;37;104mLet's proceed with the inspection of the directory\033[0m\n")
 
@@ -118,15 +116,13 @@ if user_response in ["y", "yes"]:
         else:
             print(f"No subdirectories or files found in {directory_to_inspect}")
 
-        # Provide a link to open the directory in Finder
+        # Ask to open the directory in Finder
         open_in_finder = ask_yes_no_question(f"Do you want to open {directory_to_inspect} in Finder?")
         if open_in_finder in ["y", "yes"]:
             subprocess.run(["open", os.path.expanduser(directory_to_inspect)])
-
-    else:
-        print(f"Skipping {directory_to_inspect}")
-
+    
     print("\n\033[1;37;104mEnd of the inspection\033[0m\n")
-else:
-    print("\n\033[1;37;104mInspection canceled\033[0m\n")
-    print("Thank you for using MacOS System Data Inspector, by Alex Arroyo\n")
+    display_directories_with_sizes(first_display=False)  # We make sure it's no longer the first display.
+
+print("\n\033[1;37;104mInspection finished\033[0m\n")
+print("Thank you for using MacOS System Data Inspector, by Alex Arroyo\n")
