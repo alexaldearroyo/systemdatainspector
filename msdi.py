@@ -76,7 +76,7 @@ directories = [
 
 def display_directories_with_sizes(first_display=True):
     if not first_display:
-        print("\n\033[1;37;104mSystem Data Directories\033[0m\n")  # Blue background text only for subsequent displays
+        print("\033[1;37;104mSystem Data Directories\033[0m\n")  # Blue background text only for subsequent displays
     for directory in directories:
         size = get_size(directory)
         formatted_size = format_size(size)
@@ -102,19 +102,16 @@ while True:
 
     dir_size = get_size(directory_to_inspect)
     formatted_dir_size = format_size(dir_size)
-    response = ask_yes_no_question(f"Do you want to see subdirectories and files of {directory_to_inspect} ({formatted_dir_size})?")
+    print(f"{directory_to_inspect} ({formatted_dir_size})")
 
-    if response in ["y", "yes"]:
-        subdirs_and_files = list_subdirectories_and_files(os.path.expanduser(directory_to_inspect))
-        if subdirs_and_files:
-            print("\033[1;33m" + separator + "\033[0m")  # Yellow separator
-            for item in subdirs_and_files:
-                item_path = os.path.join(os.path.expanduser(directory_to_inspect), item)
-                item_size = get_size(item_path)
-                formatted_item_size = format_size(item_size)
-                print(f"{item} ({formatted_item_size})")
-        else:
-            print(f"No subdirectories or files found in {directory_to_inspect}")
+    subdirs_and_files = list_subdirectories_and_files(os.path.expanduser(directory_to_inspect))
+    if subdirs_and_files:
+        print("\033[1;33m" + separator + "\033[0m")  # Yellow separator
+        for item in subdirs_and_files:
+            item_path = os.path.join(os.path.expanduser(directory_to_inspect), item)
+            item_size = get_size(item_path)
+            formatted_item_size = format_size(item_size)
+            print(f"{item} ({formatted_item_size})")
 
         # Ask to open the directory in Finder
         open_in_finder = ask_yes_no_question(f"Do you want to open {directory_to_inspect} in Finder?")
