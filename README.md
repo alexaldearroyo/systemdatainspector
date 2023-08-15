@@ -27,6 +27,7 @@ To run the System Data Inspector in the terminal:
 
 ```bash
 python3 <path_to_script>/systemdatainspector.py
+```
 
 Follow the on-screen prompts to inspect the sizes of various directories and optionally delve deeper into specific directories.
 
