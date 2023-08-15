@@ -77,10 +77,10 @@ directories = [
 def display_directories_with_sizes(first_display=True):
     if not first_display:
         print("\033[1;37;104mSystem Data Directories\033[0m\n")  # Blue background text only for subsequent displays
-    for directory in directories:
+    for idx, directory in enumerate(directories, 1):
         size = get_size(directory)
         formatted_size = format_size(size)
-        print(f"The size of {directory} is: {formatted_size}")
+        print(f"The size of Directory {idx}: {directory} is: {formatted_size}")
 
 print("\n\033[1;33mMACOS SYSTEM DATA INSPECTOR\033[0m\n")  # Yellow text
 print("\033[1;37;104mApproximate calculation of the potentially modifiable space occupied by System Data on your Mac\033[0m\n")
@@ -98,28 +98,46 @@ while True:
         break
 
     directory_to_inspect = input("\033[1;32mPlease specify the directory you want to inspect:\033[0m ")
-    print("\033[1;37;104mLet's proceed with the inspection of the directory\033[0m\n")
+   
+    # Check if user provided a number
+    if directory_to_inspect.isdigit():
+        dir_num = int(directory_to_inspect)
+        if 0 < dir_num <= len(directories):
+            directory_to_inspect = directories[dir_num-1]
+        else:
+            print("\033[1;31mInvalid directory number.\033[0m")
+            print()
+            continue
+   
+    try:
+        print("\n\033[1;37;104mLet's proceed with the inspection of the directory\033[0m")
 
-    dir_size = get_size(directory_to_inspect)
-    formatted_dir_size = format_size(dir_size)
-    print(f"{directory_to_inspect} ({formatted_dir_size})")
+        dir_size = get_size(directory_to_inspect)
+        if dir_size == -1:
+            raise FileNotFoundError
+        
+        formatted_dir_size = format_size(dir_size)
+        print(f"{directory_to_inspect} ({formatted_dir_size})")
 
-    subdirs_and_files = list_subdirectories_and_files(os.path.expanduser(directory_to_inspect))
-    if subdirs_and_files:
-        print("\033[1;33m" + separator + "\033[0m")  # Yellow separator
-        for item in subdirs_and_files:
-            item_path = os.path.join(os.path.expanduser(directory_to_inspect), item)
-            item_size = get_size(item_path)
-            formatted_item_size = format_size(item_size)
-            print(f"{item} ({formatted_item_size})")
+        subdirs_and_files = list_subdirectories_and_files(os.path.expanduser(directory_to_inspect))
+        if subdirs_and_files:
+            print("\033[1;33m" + separator + "\033[0m")  # Yellow separator
+            for item in subdirs_and_files:
+                item_path = os.path.join(os.path.expanduser(directory_to_inspect), item)
+                item_size = get_size(item_path)
+                formatted_item_size = format_size(item_size)
+                print(f"{item} ({formatted_item_size})")
 
-        # Ask to open the directory in Finder
-        open_in_finder = ask_yes_no_question(f"Do you want to open {directory_to_inspect} in Finder?")
-        if open_in_finder in ["y", "yes"]:
-            subprocess.run(["open", os.path.expanduser(directory_to_inspect)])
-    
-    print("\n\033[1;37;104mEnd of the inspection\033[0m\n")
-    display_directories_with_sizes(first_display=False)  # We make sure it's no longer the first display.
+            # Ask to open the directory in Finder
+            open_in_finder = ask_yes_no_question(f"Do you want to open {directory_to_inspect} in Finder?")
+            if open_in_finder in ["y", "yes"]:
+                subprocess.run(["open", os.path.expanduser(directory_to_inspect)])
+        
+        print("\n\033[1;37;104mEnd of the inspection\033[0m\n")
+        display_directories_with_sizes(first_display=False)  # We make sure it's no longer the first display.
+
+    except FileNotFoundError:
+        print("Invalid directory path. Please enter the correct directory path or index number.")
 
 print("\n\033[1;37;104mInspection finished\033[0m\n")
 print("Thank you for using MacOS System Data Inspector, by Alex Arroyo\n")
