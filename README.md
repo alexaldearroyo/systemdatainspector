@@ -42,6 +42,41 @@ Follow the on-screen prompts to inspect the sizes of various directories and opt
 - Option to inspect individual directories in detail.
 - Capability to open inspected directories in Finder.
 
+
+Por supuesto, aquí tienes cómo podrías añadir una sección "Install and Execute as a Command" a tu archivo README.md, basándome en la explicación anterior y utilizando `sudo cp` en lugar de `sudo mv`:
+
+## Install and Execute as a Command
+
+To make the System Data Inspector easily executable from any directory using the command `sdi`, follow these steps:
+
+### Make the Script Executable
+
+Make your script executable by running:
+
+```bash
+chmod +x /path/to/systemdatainspector.py
+```
+
+### Copy the Script to a Directory in Your PATH
+
+Copy the script to `/usr/local/bin` and rename it as `sdi`:
+
+```bash
+sudo cp /path/to/systemdatainspector.py /usr/local/bin/sdi
+```
+
+### Execution
+
+After these steps, you can run the System Data Inspector from any directory simply by typing:
+
+```bash
+sdi
+```
+
+This will execute the `systemdatainspector.py` script.
+
+Remember to replace `/path/to/systemdatainspector.py` with the actual path to your script.
+
 ## Credits
 
 &copy; Alex Arroyo, 2023

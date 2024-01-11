@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import subprocess # Allows running commands
 import os # Access to OS directories
 
