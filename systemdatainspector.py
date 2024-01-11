@@ -103,8 +103,8 @@ def display_directories_with_sizes(first_display=True):
         formatted_size = format_size(size)
         print(f"The size of Directory {idx}: {directory} is: {formatted_size}")
 
-print("\n\033[1;33mSYSTEM DATA INSPECTOR\033[0m\n")  # Yellow text
-print("\033[1;37;104mApproximate calculation of the potentially modifiable space occupied by System Data on your Mac\033[0m\n")
+print("\n\033[1;34mSYSTEM DATA INSPECTOR\033[0m\n")
+print("\033[1;37;44mApproximate calculation of the potentially modifiable space occupied by System Data on your Mac\033[0m\n")
 
 display_directories_with_sizes()
 
@@ -166,5 +166,5 @@ while True:
             continue  # This will return us to the beginning of the inner loop, prompting for the directory again
 
 
-print("\n\033[1;37;104mInspection finished\033[0m\n")
+print("\n\033[1;37;44mInspection finished\033[0m\n")
 print("Thank you for using MacOS System Data Inspector, by Alex Arroyo\n")

@@ -2,8 +2,9 @@
 
 ![Static Badge](https://img.shields.io/badge/Made%20with-Python%203-brightgreen)
 
-
 The System Data Inspector for MacOS provides a quick and efficient way to view the approximate calculations of potentially modifiable space occupied by System Data on your Mac. With it, you can view various directories and their sizes.
+
+![Screenshot](Resources/screenshot.png)
 
 ## Requirements
 
