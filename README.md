@@ -4,7 +4,7 @@
 
 The System Data Inspector for MacOS provides a quick and efficient way to view the approximate calculations of potentially modifiable space occupied by System Data on your Mac. With it, you can view various directories and their sizes.
 
-![Screenshot](Resources/screenshot.png)
+![Screenshot](Resources/screenshot1.png)
 
 ## Requirements
 
