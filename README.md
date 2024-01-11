@@ -42,9 +42,6 @@ Follow the on-screen prompts to inspect the sizes of various directories and opt
 - Option to inspect individual directories in detail.
 - Capability to open inspected directories in Finder.
 
-
-Por supuesto, aquí tienes cómo podrías añadir una sección "Install and Execute as a Command" a tu archivo README.md, basándome en la explicación anterior y utilizando `sudo cp` en lugar de `sudo mv`:
-
 ## Install and Execute as a Command
 
 To make the System Data Inspector easily executable from any directory using the command `sdi`, follow these steps:
